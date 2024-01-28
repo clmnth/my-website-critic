@@ -44,13 +44,19 @@ const App = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+
+    console.log('Effect triggered');
+
     const openai = new OpenAI({
-      apiKey: "OPENAI_API_KEY",
+      apiKey: import.meta.env.VITE_OPENAI_API_KEY,
       dangerouslyAllowBrowser: true,
     });
 
     const fetchUICriticResponse = async () => {
       setIsLoading(true);
+
+      console.log('Fetching AI response');
+
       try {
         const result = await openai.chat.completions.create({
           model: "gpt-4-vision-preview",
@@ -70,6 +76,9 @@ const App = () => {
           ],
           "max_tokens": 1500
         });
+
+        console.log('AI response received:', result);
+
         if (result && result.choices && result.choices.length > 0 && result.choices[0].message) {
           console.log(1, result);
           setResponse(result.choices[0].message.content);
@@ -78,6 +87,7 @@ const App = () => {
         console.error("Error fetching AI response:", error);
       } finally {
         setIsLoading(false);
+        console.log('Fetching completed')
       }
     };
 
