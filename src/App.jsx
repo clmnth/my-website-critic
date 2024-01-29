@@ -51,8 +51,9 @@ const App = () => {
         result.choices.length > 0 &&
         result.choices[0].message
       ) {
-        console.log(1, result);
+        
         setResponse(result.choices[0].message.content);
+        console.log("response", response);
       }
     } catch (error) {
       console.error("Error fetching AI response:", error);
